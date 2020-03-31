@@ -1,4 +1,9 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Wishlist Web App
+
+## Into
+This App is being created to test React on Google Firebase. It's meant to track the wishlists 
+of multiple users, with the ability to share access to wishlists between users. A foundational 
+requirement of this App is live updates across devices.
 
 ## Available Scripts
 
