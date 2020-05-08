@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as firebase from 'firebase/app';
 import App from './core/App';
+import { Provider, themes } from '@fluentui/react-northstar'
+import { BrowserRouter } from 'react-router-dom';
+
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDQI8BBnXotgciNZ-tvzKfUKAGVG19mLFk',
@@ -17,10 +20,13 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider theme={themes.teams}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

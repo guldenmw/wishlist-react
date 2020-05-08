@@ -1,16 +1,16 @@
-import styled from 'styled-components';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
-
-const StyledNavBar = styled.div`
-  flex-grow: 1;
-  
-  .menu-button {
-    margin-right: 10px;
-  }
-  
-  .title {
-  flex-grow: 1;
-  }
-`;
-
-export default StyledNavBar;
+export const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    appBar: {
+      zIndex: theme.zIndex.drawer + 1,
+    },
+    toolbar: {
+      // display: 'flex',
+      // justifyContent: 'space-between',
+    },
+    appName: {
+      flex: 1
+    }
+  }),
+);
