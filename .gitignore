@@ -24,5 +24,7 @@ yarn-error.log*
 
 src/react-app-env.d.ts
 
-develop.env
 .idea
+
+# firebase
+.firebase/

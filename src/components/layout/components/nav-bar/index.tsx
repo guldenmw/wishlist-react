@@ -7,7 +7,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { useStyles } from './styles';
 
-
 interface IProps {
   toggleDrawer: () => void;
 }
@@ -23,23 +22,23 @@ const Navbar: FC<IProps> = (props) => {
       elevation={1}
     >
       <Toolbar className={classes.toolbar}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={toggleDrawer}
-            edge="start"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography className={classes.appName} variant="h6" noWrap>
-            Persistent drawer
-          </Typography>
-          <IconButton
-            color="inherit"
-            aria-label="search"
-          >
-            <SearchIcon />
-          </IconButton>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={toggleDrawer}
+          edge="start"
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography className={classes.appName} variant="h6" noWrap>
+          Persistent drawer
+        </Typography>
+        <IconButton
+          color="inherit"
+          aria-label="search"
+        >
+          <SearchIcon />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

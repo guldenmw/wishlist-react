@@ -1,23 +1,18 @@
 import React, { FC } from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 interface IProps {
-  items: string[];
+  id: number;
 }
 
 const Wishlist: FC<IProps> = (props) => {
-  const { items } = props;
+  const { } = props;
+
   return (
     <>
-      {items.map((item) => (
-        <Grid item direction={'column'}>
-          {/*<Paper>*/}
-            <Typography>
-              {item}
-            </Typography>
-          {/*</Paper>*/}
-        </Grid>
-      ))}
+      <Typography variant={'h5'}>
+        Personal
+      </Typography>
     </>
   );
 };

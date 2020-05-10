@@ -1,6 +1,6 @@
 import React, { FC, useCallback } from 'react';
-import Navbar from '../nav-bar';
-import { SideDrawer } from '../side-drawer';
+import Navbar from './components/nav-bar';
+import ResponsiveDrawer from './components/responsive-drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Box, Toolbar } from '@material-ui/core';
 
@@ -19,7 +19,7 @@ const Layout: FC<IProps> = (props) => {
   return (
     <>
       <CssBaseline />
-      <SideDrawer open={open}/>
+      <ResponsiveDrawer open={open}/>
       <Navbar toggleDrawer={toggleDrawer}/>
       <Toolbar />
       <Box px={32}>
