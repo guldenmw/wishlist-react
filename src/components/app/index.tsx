@@ -8,7 +8,7 @@ import Layout from '../layout';
 import Wishlist from '../wishlist';
 import useFirebaseAuthentication from '../../hooks/use-firebase-auth';
 import FirebaseContext, { withFirebase } from '../../core/firebase/withFirebase';
-import Login from '../../pages/login';
+import Login from '../../pages/auth/login';
 
 const App: FC = (props) => {
   const app = useContext(FirebaseContext);
@@ -19,7 +19,7 @@ const App: FC = (props) => {
     if (!authUser) {
       history.push('/auth/login');
     }
-  }, [authUser]);
+  }, [authUser, history]);
 
   return (
     <Switch>

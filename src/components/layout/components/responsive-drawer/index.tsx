@@ -14,7 +14,7 @@ const ResponsiveDrawer: FC<IProps> = (props) => {
 
   return (
     <nav className={classes.drawer} aria-label="mailbox folders">
-      <Hidden smUp implementation="css">
+      <Hidden smUp>
         <Drawer
           variant="persistent"
           anchor="top"
@@ -22,14 +22,11 @@ const ResponsiveDrawer: FC<IProps> = (props) => {
           classes={{
             paper: classes.mobileDrawerPaper,
           }}
-          // ModalProps={{
-          //   keepMounted: true, // Better open performance on mobile.
-          // }}
         >
           <BaseDrawer/>
         </Drawer>
       </Hidden>
-      <Hidden xsDown implementation="css">
+      <Hidden xsDown>
         <Drawer
           variant="persistent"
           anchor="left"

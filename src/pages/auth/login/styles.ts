@@ -5,13 +5,12 @@ export const useStyles = makeStyles({
     margin: 20,
   },
   loginDetails: {
-    padding: 10,
+    padding: '10px 0',
   },
   buttons: {
-    padding: 10,
+    padding: '10px 0',
   },
   button: {
-    margin: '10px 0',
     width: '100%',
   },
 })

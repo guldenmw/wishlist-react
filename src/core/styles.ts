@@ -5,6 +5,6 @@ export const useStyles = makeStyles({
     height: '100vh',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
+    padding: 0
   },
 })
