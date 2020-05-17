@@ -5,7 +5,7 @@ import React, {
   useReducer,
   memo,
 } from 'react';
-import { Button, Grid, TextField, Typography, Link, CircularProgress } from '@material-ui/core';
+import { Button, Grid, TextField, Typography, CircularProgress } from '@material-ui/core';
 import { useStyles } from './styles';
 import { validate as validateEmail } from 'email-validator';
 import reducer, {
@@ -25,7 +25,7 @@ interface IProps {
   ) => void;
 }
 
-const LoginForm: FC<IProps> = (props) => {
+const SignUpForm: FC<IProps> = (props) => {
   const {
     isLoading,
     errorMessage,
@@ -87,16 +87,6 @@ const LoginForm: FC<IProps> = (props) => {
             <Typography variant='caption' color='error'>
               {errorMessage}
             </Typography>
-            <Typography variant='caption' color='error'>
-              <Link
-                href="#"
-                underline='always'
-                color='error'
-                onClick={(e: React.MouseEvent) => e.preventDefault()}
-              >
-                Reset password?
-              </Link>
-            </Typography>
           </>
         )}
       </Grid>
@@ -108,9 +98,9 @@ const LoginForm: FC<IProps> = (props) => {
           onClick={handleSubmit}
         >
           {isLoading ? (
-            <CircularProgress />
+            <CircularProgress size={24} className={classes.buttonProgress} />
           ) : (
-            'Log in'
+            'Sign Up'
           )}
         </Button>
       </Grid>
@@ -118,6 +108,6 @@ const LoginForm: FC<IProps> = (props) => {
   );
 };
 
-LoginForm.defaultProps = {};
+SignUpForm.defaultProps = {};
 
-export default memo(LoginForm);
+export default memo(SignUpForm);

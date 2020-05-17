@@ -2,39 +2,29 @@ import React, {
   FC,
   useCallback,
   useContext,
-  useEffect,
   memo,
   useState,
 } from 'react';
 import FirebaseContext from '../../../core/firebase/withFirebase';
-import useFirebaseAuthentication from '../../../hooks/use-firebase-auth';
 import { useHistory } from "react-router-dom";
 import { Grid } from '@material-ui/core';
 import { useStyles } from './styles';
 import { AuthPage } from '../../../components/auth';
-import LoginForm from './components/login-form';
+import SignUpForm from './components/sign-up-form';
 
-
-const Login: FC = () => {
+const SignUp: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const classes = useStyles();
   const history = useHistory();
   const app = useContext(FirebaseContext);
-  const authUser = useFirebaseAuthentication(app)
-
-  useEffect(() => {
-    if (authUser) {
-      history.push('/')
-    }
-  }, [authUser, history]);
 
   const handleLogin = useCallback(async (
-    email,
-    emailValid,
-    password,
-    passwordValid,
+    email: string,
+    emailValid: string,
+    password: string,
+    passwordValid: string,
   ) => {
     if (!emailValid || !passwordValid) {
       setErrorMessage('Please enter valid email and password.');
@@ -42,26 +32,39 @@ const Login: FC = () => {
     }
     setIsLoading(true);
 
+
     try {
-      await app.auth().signInWithEmailAndPassword(email, password);
+      await app.auth().createUserWithEmailAndPassword(email, password)
+      setIsLoading(false)
+
     } catch (e) {
       console.log('e: ', e);
-      if (e.code === 'auth/user-not-found') {
-        console.log('Incorrect email or password.')
-        setErrorMessage('Incorrect email and / or password.');
+      if (e.code === 'auth/email-already-in-use') {
+        setErrorMessage(e.message);
       }
+      setIsLoading(false)
+      return
     }
-    setIsLoading(false);
-  }, [app, setErrorMessage]);
+
+
+    try {
+      const user = app.auth().currentUser;
+      await user?.sendEmailVerification()
+      history.push('/auth/sign-up-success')
+    } catch (e) {
+      console.log(e)
+    }
+
+  }, [app, history, setErrorMessage]);
 
   return (
-    <AuthPage page={'login'}>
+    <AuthPage page={'signUp'}>
       <Grid container direction='column'>
         <Grid item container direction='row' justify='center' alignItems='center' className={classes.body}>
-          <LoginForm
+          <SignUpForm
             isLoading={isLoading}
-            errorMessage={errorMessage}
             onSubmit={handleLogin}
+            errorMessage={errorMessage}
           />
         </Grid>
       </Grid>
@@ -69,6 +72,6 @@ const Login: FC = () => {
   );
 };
 
-Login.defaultProps = {};
+SignUp.defaultProps = {};
 
-export default memo(Login);
+export default memo(SignUp);

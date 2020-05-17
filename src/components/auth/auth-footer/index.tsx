@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { useStyles } from './styles';
-import { Box, Grid, Typography } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Box, Grid, Link, Typography } from '@material-ui/core';
 
 export interface IFooterOption {
   label: string;
@@ -33,7 +32,7 @@ const AuthFooter: FC<IProps> = (props) => {
             )}
             <Box mx={1}>
               <Typography variant={'caption'}>
-                <Link to="#">
+                <Link href={option.src}>
                   {option.label}
                 </Link>
               </Typography>

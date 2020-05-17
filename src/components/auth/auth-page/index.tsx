@@ -1,22 +1,20 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { Box, Paper, Hidden } from '@material-ui/core';
 import AuthHeader from '../auth-header';
 import { useStyles } from './styles';
-import { IFooterOption } from '../auth-footer';
 import AuthLayout from '../auth-layout';
+import { pageConfig } from '../config';
 
 
 interface IProps {
-  headerMessage?: string;
-  footerOptions?: IFooterOption[];
+  page: 'login' | 'signUp' | 'passwordReset';
 }
 
 const AuthPage: FC<IProps> = (props) => {
-  const {
-    headerMessage = '',
-    footerOptions,
-    children
-  } = props;
+  const { page, children } = props;
+  const { headerMessage, footerOptions } = useMemo(() => {
+    return pageConfig[page];
+  }, [page]);
   const classes = useStyles();
 
   return (
