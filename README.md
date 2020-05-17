@@ -1,4 +1,4 @@
-Wishlist Web App
+Gifted Wishlist Web App
 
 ## Into
 This App is being created to test React on Google Firebase. It's meant to track the wishlists 

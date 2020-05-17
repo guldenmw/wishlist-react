@@ -7,7 +7,6 @@ export interface IState {
   emailValid: boolean;
   password: string;
   passwordValid: boolean;
-  errorMessage: string;
 }
 
 export const initialState: IState = {
@@ -15,7 +14,6 @@ export const initialState: IState = {
   emailValid: false,
   password: '',
   passwordValid: false,
-  errorMessage: ''
 };
 
 const reducer = (state: IState, action: { type: string; data: any }) => {
@@ -33,15 +31,9 @@ const reducer = (state: IState, action: { type: string; data: any }) => {
     case UPDATE_PASSWORD_FIELD:
       return {
         ...state,
-        email: data.password,
-        emailValid: data.passwordValid,
+        password: data.password,
+        passwordValid: data.passwordValid,
         errorMessage: '',
-      }
-
-    case SET_ERROR_MESSAGE:
-      return {
-        ...state,
-        errorMessage: data,
       }
 
     default:
