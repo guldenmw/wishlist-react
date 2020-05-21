@@ -1,26 +1,25 @@
 import React, {
   FC,
   useCallback,
-  useContext,
-  memo,
   useState,
 } from 'react';
-import FirebaseContext from '../../../core/firebase/withFirebase';
-import { useHistory } from "react-router-dom";
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import { useStyles } from './styles';
 import { AuthPage } from '../../../components/auth';
 import SignUpForm from './components/sign-up-form';
+import firebase  from '../../../core/firebase';
 
-const SignUp: FC = () => {
+const SignUp: FC<RouteComponentProps> = (props) => {
+  const { history } = props;
+
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const classes = useStyles();
-  const history = useHistory();
-  const app = useContext(FirebaseContext);
 
   const handleLogin = useCallback(async (
+    name: string,
     email: string,
     emailValid: string,
     password: string,
@@ -32,10 +31,10 @@ const SignUp: FC = () => {
     }
     setIsLoading(true);
 
-
     try {
-      await app.auth().createUserWithEmailAndPassword(email, password)
+      await firebase.register(name, email, password)
       setIsLoading(false)
+      history.replace('/')
 
     } catch (e) {
       console.log('e: ', e);
@@ -46,16 +45,15 @@ const SignUp: FC = () => {
       return
     }
 
+    // try {
+    //   const user = app.auth().currentUser;
+    //   await user?.sendEmailVerification()
+    //   history.push('/auth/sign-up-success')
+    // } catch (e) {
+    //   console.log(e)
+    // }
 
-    try {
-      const user = app.auth().currentUser;
-      await user?.sendEmailVerification()
-      history.push('/auth/sign-up-success')
-    } catch (e) {
-      console.log(e)
-    }
-
-  }, [app, history, setErrorMessage]);
+  }, [history, setErrorMessage]);
 
   return (
     <AuthPage page={'signUp'}>
@@ -74,4 +72,4 @@ const SignUp: FC = () => {
 
 SignUp.defaultProps = {};
 
-export default memo(SignUp);
+export default withRouter(SignUp);

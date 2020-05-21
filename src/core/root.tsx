@@ -1,25 +1,23 @@
 import React, { FC } from 'react';
-import { Provider, themes } from '@fluentui/react-northstar';
 import { BrowserRouter } from 'react-router-dom';
 import App from '../components/app/index';
-import { FirebaseProvider } from './firebase/provider';
-import { Container } from '@material-ui/core';
+import { Container, CssBaseline, MuiThemeProvider } from '@material-ui/core';
 import { useStyles } from './styles';
+import theme from './theme';
 
 const Root: FC = () => {
   const classes = useStyles();
 
   return (
     <React.StrictMode>
-      <Provider theme={themes.teams}>
-        <FirebaseProvider>
-          <BrowserRouter>
-            <Container className={classes.root}>
-              <App />
-            </Container>
-          </BrowserRouter>
-        </FirebaseProvider>
-      </Provider>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <BrowserRouter>
+          <Container className={classes.root}>
+            <App />
+          </Container>
+        </BrowserRouter>
+      </MuiThemeProvider>
     </React.StrictMode>
   );
 };

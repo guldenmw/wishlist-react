@@ -19,9 +19,9 @@ const ResponsiveDrawer: FC<IProps> = (props) => {
           variant="persistent"
           anchor="top"
           open={mobileOpen}
-          classes={{
-            paper: classes.mobileDrawerPaper,
-          }}
+          // classes={{
+          //   paper: classes.mobileDrawerPaper,
+          // }}
         >
           <BaseDrawer/>
         </Drawer>
@@ -30,7 +30,7 @@ const ResponsiveDrawer: FC<IProps> = (props) => {
         <Drawer
           variant="persistent"
           anchor="left"
-          open
+          open={mobileOpen}
           classes={{
             paper: classes.drawerPaper,
           }}

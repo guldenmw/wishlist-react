@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { useStyles } from './styles';
+import firebase  from '../../../../core/firebase';
 
 interface IProps {
   toggleDrawer: () => void;
@@ -39,6 +40,9 @@ const Navbar: FC<IProps> = (props) => {
         >
           <SearchIcon />
         </IconButton>
+        <Typography variant={'caption'} onClick={firebase.logout}>
+            Sign out
+        </Typography>
       </Toolbar>
     </AppBar>
   );

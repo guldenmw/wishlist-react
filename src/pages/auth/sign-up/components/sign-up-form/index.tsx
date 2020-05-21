@@ -10,7 +10,7 @@ import { useStyles } from './styles';
 import { validate as validateEmail } from 'email-validator';
 import reducer, {
   initialState,
-  UPDATE_EMAIL_FIELD,
+  UPDATE_EMAIL_FIELD, UPDATE_NAME_FIELD,
   UPDATE_PASSWORD_FIELD,
 } from './reducer';
 
@@ -18,6 +18,7 @@ interface IProps {
   isLoading: boolean;
   errorMessage: string;
   onSubmit: (
+    name: string,
     email: string,
     emailValid: string,
     password: string,
@@ -35,6 +36,11 @@ const SignUpForm: FC<IProps> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const classes = useStyles();
 
+  const handleNameChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
+    const name = e.currentTarget.value;
+    dispatch({ type: UPDATE_NAME_FIELD, data: { name }})
+  }, []);
+
   const handleEmailChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     const email = e.currentTarget.value;
     const emailValid = validateEmail(email);
@@ -48,12 +54,24 @@ const SignUpForm: FC<IProps> = (props) => {
   }, []);
 
   const handleSubmit = useCallback(() => {
-    onSubmit(state.email, state.emailValid, state.password, state.passwordValid);
-  }, [onSubmit, state.email, state.emailValid, state.password, state.passwordValid]);
+    onSubmit(state.name, state.email, state.emailValid, state.password, state.passwordValid);
+  }, [onSubmit, state.name, state.email, state.emailValid, state.password, state.passwordValid]);
 
   return (
     <Grid container direction='column'>
       <Grid item container direction='column' justify='center' alignItems='center'>
+        <TextField
+          id="username"
+          className={classes.loginDetails}
+          variant="outlined"
+          size="small"
+          placeholder='Enter name'
+          fullWidth
+          type='name'
+          value={state.name}
+          required
+          onChange={handleNameChange}
+        />
         <TextField
           id="login-email"
           className={classes.loginDetails}

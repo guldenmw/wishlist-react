@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import { Typography } from '@material-ui/core';
 
 interface IProps {
@@ -17,4 +17,4 @@ const Wishlist: FC<IProps> = (props) => {
   );
 };
 
-export default Wishlist;
+export default memo(Wishlist);

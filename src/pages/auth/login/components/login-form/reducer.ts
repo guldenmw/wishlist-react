@@ -1,6 +1,6 @@
-export const UPDATE_EMAIL_FIELD = 'login/update-email-field';
-export const UPDATE_PASSWORD_FIELD = 'login/update-password-field';
-export const SET_ERROR_MESSAGE = 'login/set-error-message';
+export const UPDATE_EMAIL_FIELD = 'update-email-field';
+export const UPDATE_PASSWORD_FIELD = 'update-password-field';
+export const SET_ERROR_MESSAGE = 'set-error-message';
 
 export interface IState {
   email: string;

@@ -1,34 +1,23 @@
 import React, {
   FC,
   useCallback,
-  useContext,
-  useEffect,
-  memo,
   useState,
 } from 'react';
-import FirebaseContext from '../../../core/firebase/withFirebase';
-import useFirebaseAuthentication from '../../../hooks/use-firebase-auth';
-import { useHistory } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import { useStyles } from './styles';
 import { AuthPage } from '../../../components/auth';
 import LoginForm from './components/login-form';
+import firebase  from '../../../core/firebase';
 
 
-const Login: FC = () => {
+const Login: FC<any> = (props) => {
+  const { history, location } = props;
+
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const classes = useStyles();
-  const history = useHistory();
-  const app = useContext(FirebaseContext);
-  const authUser = useFirebaseAuthentication(app)
-
-  useEffect(() => {
-    if (authUser) {
-      history.push('/')
-    }
-  }, [authUser, history]);
 
   const handleLogin = useCallback(async (
     email,
@@ -43,7 +32,11 @@ const Login: FC = () => {
     setIsLoading(true);
 
     try {
-      await app.auth().signInWithEmailAndPassword(email, password);
+      await firebase.login(email, password);
+      setIsLoading(false);
+      const referrer = location?.state?.from?.pathname || '/';
+      history.replace(referrer);
+
     } catch (e) {
       console.log('e: ', e);
       if (e.code === 'auth/user-not-found') {
@@ -51,8 +44,7 @@ const Login: FC = () => {
         setErrorMessage('Incorrect email and / or password.');
       }
     }
-    setIsLoading(false);
-  }, [app, setErrorMessage]);
+  }, [history, location?.state?.from?.pathname, setErrorMessage]);
 
   return (
     <AuthPage page={'login'}>
@@ -71,4 +63,4 @@ const Login: FC = () => {
 
 Login.defaultProps = {};
 
-export default memo(Login);
+export default withRouter(Login);

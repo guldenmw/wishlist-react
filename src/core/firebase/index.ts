@@ -1,4 +1,6 @@
-import firebase from 'firebase';
+import app from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firebase-firestore'
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -9,4 +11,44 @@ const config = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
 };
 
-export default firebase.initializeApp(config);
+class Firebase {
+  private auth: firebase.auth.Auth;
+  private db: firebase.firestore.Firestore;
+  public isAuthenticated: boolean;
+
+  constructor() {
+    app.initializeApp(config)
+    this.auth = app.auth()
+    this.db = app.firestore()
+    this.isAuthenticated = !!this.auth.currentUser;
+  }
+
+  login(email: string, password: string) {
+    return this.auth.signInWithEmailAndPassword(email, password)
+  }
+
+  logout() {
+    return this.auth.signOut()
+  }
+
+  async register(name: string, email: string, password: string) {
+    await this.auth.createUserWithEmailAndPassword(email, password)
+    return this.auth.currentUser?.updateProfile({
+      displayName: name
+    })
+  }
+
+  isInitialized() {
+    return new Promise(resolve => {
+      this.auth.onAuthStateChanged(resolve)
+    })
+  }
+
+  listener() {
+    this.auth.onAuthStateChanged((authUser) => {
+      this.isAuthenticated = !!authUser;
+    })
+  }
+}
+
+export default new Firebase();
