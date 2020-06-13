@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import {
+  Redirect,
   Route,
   Switch,
 } from 'react-router-dom';
@@ -15,20 +16,25 @@ const App: FC = () => {
 
   useEffect(() => {
     firebase.isInitialized().then(val => {
-      setFirebaseInit(!!val)
+      setFirebaseInit(true)
     })
   })
+  console.log('firebaseInit: ', firebaseInit);
 
 
   return firebaseInit ? (
     <Switch>
-      <Route exact path={'/sign-up'} component={SignUp} />
-      <Route exact path={'/login'} component={Login} />
-      <PrivateRoute path={'/'}>
+      <Route exact path={'/'}>
+        <Redirect to={'/wishlist'}/>
+      </Route>
+      <PrivateRoute path={'/wishlist'}>
         <Layout test={'test'}>
           <Wishlist id={1}/>
         </Layout>
       </PrivateRoute>
+      <Route exact path={'/sign-up'} component={SignUp} />
+      <Route exact path={'/login'} component={Login} />
+
     </Switch>
   ) : (
     <div id="loader"><CircularProgress /></div>

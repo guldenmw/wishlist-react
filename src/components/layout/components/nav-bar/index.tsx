@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -6,15 +6,21 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { useStyles } from './styles';
-import firebase  from '../../../../core/firebase';
+import firebase from '../../../../core/firebase';
+import { withRouter } from 'react-router';
 
 interface IProps {
   toggleDrawer: () => void;
 }
 
-const Navbar: FC<IProps> = (props) => {
-  const { toggleDrawer } = props;
+const Navbar: FC<IProps & any> = (props) => {
+  const { toggleDrawer, history } = props;
   const classes = useStyles();
+
+  const handleLogout = useCallback(() => {
+    firebase.logout()
+    history.push('/login')
+  }, []);
 
   return (
     <AppBar
@@ -40,7 +46,7 @@ const Navbar: FC<IProps> = (props) => {
         >
           <SearchIcon />
         </IconButton>
-        <Typography variant={'caption'} onClick={firebase.logout}>
+        <Typography variant={'caption'} onClick={handleLogout}>
             Sign out
         </Typography>
       </Toolbar>
@@ -48,4 +54,4 @@ const Navbar: FC<IProps> = (props) => {
   );
 };
 
-export default Navbar;
+export default withRouter(Navbar);

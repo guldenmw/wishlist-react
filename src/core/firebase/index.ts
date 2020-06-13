@@ -21,6 +21,9 @@ class Firebase {
     this.auth = app.auth()
     this.db = app.firestore()
     this.isAuthenticated = !!this.auth.currentUser;
+
+    app.auth().setPersistence(app.auth.Auth.Persistence.LOCAL)
+    this.listener();
   }
 
   login(email: string, password: string) {
@@ -46,6 +49,7 @@ class Firebase {
 
   listener() {
     this.auth.onAuthStateChanged((authUser) => {
+      console.log('auth state change: authUser: ', authUser);
       this.isAuthenticated = !!authUser;
     })
   }
